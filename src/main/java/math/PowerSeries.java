@@ -8,10 +8,11 @@ public class PowerSeries {
     }
 
     public double arccos(double x) {
+        if (Math.abs(x) > 1)
+            return Double.NaN;
         double result = Math.PI / 2;
-        for (int i = 1; i <= iterationCount; i++) {
-            if (i % 2 != 0)
-                result += (-1 * Math.pow(x, i)) / factorial(i);
+        for (int i = 0; i <= iterationCount; i++) {
+            result -= (factorial(2 * i) / (Math.pow(4, i) * Math.pow(factorial(i), 2) * (2 * i + 1))) * Math.pow(x, 2 * i + 1);
         }
         return result;
     }
