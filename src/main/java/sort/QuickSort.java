@@ -12,7 +12,8 @@ public class QuickSort {
         int middle = startIndex + (endIndex - startIndex) / 2;
         int pivot = array[middle];
 
-        int i = startIndex, j = endIndex;
+        int i = startIndex;
+        int j = endIndex;
         while (i <= j) {
             while (array[i] < pivot) {
                 i++;
