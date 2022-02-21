@@ -229,7 +229,6 @@ public class CarTest {
     }
 
 
-
     @Test
     public void decreaseCarConditionByChangingTransmissionWithLowRevolutionNumber() {
         Human human = new Human("Mari");
@@ -289,19 +288,14 @@ public class CarTest {
         Car car = new Car("Dodge");
         int carCondition = car.getCondition();
         int currentRevolutionNumber = car.getCurrentRevolutionNumber();
-        int nextTransmissionNumber = car.getCurrentTransmission().getNumberTransmission() + 1;
 
         human.buyCar(car);
         human.startDriving();
-        while (nextTransmissionNumber != 7) {
-            while (currentRevolutionNumber < 2000) {
-                human.stepGas();
-                currentRevolutionNumber = car.getCurrentRevolutionNumber();
-            }
-            carCondition = car.getCondition();
-            human.changeTransmission(nextTransmissionNumber);
-            nextTransmissionNumber = car.getCurrentTransmission().getNumberTransmission() + 1;
+        while (currentRevolutionNumber < 2000) {
+            human.stepGas();
+            currentRevolutionNumber = car.getCurrentRevolutionNumber();
         }
+        human.changeTransmission(6);
 
         assertEquals(carCondition - 1, car.getCondition());
     }
