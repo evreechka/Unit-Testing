@@ -1,6 +1,7 @@
 import model.Car;
 import model.Human;
 import model.Transmission;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -8,11 +9,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CarTest {
+    private Human human;
+    private Car car;
+    @BeforeEach
+    public void setUp() {
+         human = new Human("Mari");
+         car = new Car("Dodge");
+    }
     @Test
     public void startCar() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
 
         assertEquals("Success", human.startDriving());
@@ -21,9 +26,6 @@ public class CarTest {
 
     @Test
     public void stopCar() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
         human.startDriving();
 
@@ -33,23 +35,16 @@ public class CarTest {
 
     @Test
     public void startCarWhichNotBoughtYet() {
-        Human human = new Human("Mari");
-
         assertEquals("You haven't car!!", human.startDriving());
     }
 
     @Test
     public void stopCarWhichIsNotBought() {
-        Human human = new Human("Mari");
-
         assertEquals("You haven't car!!", human.stopDriving());
     }
 
     @Test
     public void startCarMoreThanOneTime() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
         human.startDriving();
 
@@ -59,8 +54,6 @@ public class CarTest {
 
     @Test
     public void startDrivingOnBrokenCar() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int carCondition = car.getCondition();
         int transmissionNumber = 2;
 
@@ -78,9 +71,6 @@ public class CarTest {
 
     @Test
     public void stepGasInNotStartedCar() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
 
         assertEquals("Your car isn't start", human.stepGas());
@@ -89,9 +79,6 @@ public class CarTest {
 
     @Test
     public void stepBrakeInNotStartedCar() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
 
         assertEquals("Do nothing", human.stepBrake());
@@ -100,22 +87,16 @@ public class CarTest {
 
     @Test
     public void stepGasOnCarWhichIsNotBought() {
-        Human human = new Human("Mari");
-
         assertEquals("You haven't car!!", human.stepGas());
     }
 
     @Test
     public void stepBrakeOnCarWhichIsNotBought() {
-        Human human = new Human("Mari");
-
         assertEquals("You haven't car!!", human.stepBrake());
     }
 
     @Test
     public void changeRevolutionNumberBySteppingGas() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int currentRevolutionNumber;
 
         human.buyCar(car);
@@ -128,8 +109,6 @@ public class CarTest {
 
     @Test
     public void getMoreThanMaxCountRevolutionsBySteppingGas() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int currentRevolutionNumber = car.getCurrentRevolutionNumber();
 
         human.buyCar(car);
@@ -146,8 +125,6 @@ public class CarTest {
 
     @Test
     public void decreaseRevolutionNumberBySteppingBrake() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int currentRevolutionNumber;
 
         human.buyCar(car);
@@ -164,9 +141,6 @@ public class CarTest {
 
     @Test
     public void stepBrakeInStandingCar() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
         human.startDriving();
 
@@ -176,16 +150,11 @@ public class CarTest {
 
     @Test
     public void changeTransmissionOnCarWhichIsNotBought() {
-        Human human = new Human("Mari");
-
         assertEquals("You haven't car!!", human.changeTransmission(1));
     }
 
     @Test
     public void changeTransmissionOnNotStartCar() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
 
         assertEquals("First of all, you should start the car", human.changeTransmission(1));
@@ -196,8 +165,6 @@ public class CarTest {
     @ParameterizedTest
     @ValueSource(ints = {-6, 10})
     public void changeTransmissionOnInvalidValue(Integer transmissionValue) {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int revolutionNumber;
         Transmission currentTransmission;
 
@@ -215,8 +182,6 @@ public class CarTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6})
     public void changeTransmissionOnValidValue(Integer transmissionValue) {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         Transmission currentTransmission;
 
         human.buyCar(car);
@@ -231,8 +196,6 @@ public class CarTest {
 
     @Test
     public void decreaseCarConditionByChangingTransmissionWithLowRevolutionNumber() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int carCondition;
 
         human.buyCar(car);
@@ -245,8 +208,6 @@ public class CarTest {
 
     @Test
     public void decreaseCarConditionByChangingTransmissionWithHighRevolutionNumber() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int currentRevolutionNumber = car.getCurrentRevolutionNumber();
         int carCondition;
 
@@ -265,8 +226,6 @@ public class CarTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 3, 4, 5})
     public void decreaseCarConditionByChangingTransmissionOnRevolutionNumberMuchMoreCurrent(Integer transmissionNumber) {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int currentRevolutionNumber = car.getCurrentRevolutionNumber();
         int carCondition;
 
@@ -284,8 +243,6 @@ public class CarTest {
 
     @Test
     public void decreaseCarConditionByChangingTransmissionOnRearWithoutStopping() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int carCondition = car.getCondition();
         int currentRevolutionNumber = car.getCurrentRevolutionNumber();
 
@@ -302,8 +259,6 @@ public class CarTest {
 
     @Test
     public void emergencyStop() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int carCondition = car.getCondition();
         int transmissionNumber = 2;
 

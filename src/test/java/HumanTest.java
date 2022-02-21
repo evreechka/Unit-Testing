@@ -1,5 +1,6 @@
 import model.Car;
 import model.Human;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -8,21 +9,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class HumanTest {
+    private Human human;
+    private Car car;
+
+    @BeforeEach
+    public void setUp() {
+        human = new Human("Mari");
+        car = new Car("Dodge");
+    }
+
     @Test
     public void buyCar() {
-        Human human = new Human("Mari");
-        Car car1 = new Car("Dodge");
         Car currentCar = human.getCar();
 
-        human.buyCar(car1);
+        human.buyCar(car);
 
         assertNull(currentCar);
-        assertEquals(car1, human.getCar());
+        assertEquals(car, human.getCar());
     }
+
     @ParameterizedTest
     @ValueSource(ints = {-2, 10})
     public void workIncorrectHours(Integer hours) {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
 
         assertEquals("You cannot work " + hours + " hours", human.work(hours));
@@ -32,7 +40,6 @@ public class HumanTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 5, 8})
     public void workCorrectHours(Integer hours) {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
         int currentBalance = human.getBankAccount().getBalance();
 
@@ -43,7 +50,6 @@ public class HumanTest {
 
     @Test
     public void workHardToZeroMood() {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
 
         while (currentMood != 2) {
@@ -54,9 +60,9 @@ public class HumanTest {
         assertEquals("Success", human.work(8));
         assertEquals(0, human.getMood());
     }
+
     @Test
     public void workWithBadMood() {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
 
         while (currentMood != 0) {
@@ -70,7 +76,6 @@ public class HumanTest {
 
     @Test
     public void increaseMoodByEating() {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
 
         human.eat();
@@ -80,7 +85,6 @@ public class HumanTest {
 
     @Test
     public void increaseMoodBySleeping() {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
 
         human.sleep();
@@ -90,16 +94,15 @@ public class HumanTest {
 
     @Test
     public void getSick() {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
 
         human.getSick();
 
         assertEquals(currentMood - 5, human.getMood());
     }
+
     @Test
     public void getHardSickToZeroMood() {
-        Human human = new Human("Mari");
         int currentMood = human.getMood();
 
         while (currentMood != 0) {
@@ -112,8 +115,6 @@ public class HumanTest {
 
     @Test
     public void startDrivingCarWithBadMood() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int mood = human.getMood();
 
         human.buyCar(car);
@@ -128,26 +129,18 @@ public class HumanTest {
 
     @Test
     public void fixCarWhichIsNotBought() {
-        Human human = new Human("Mari");
-
         assertEquals("You haven't car!!", human.fixCar(500));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {-100, 400})
     public void fixCarWithIncorrectAmount(Integer amount) {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
         assertEquals("You cannot fix something in car. Not enough money for repair", human.fixCar(amount));
     }
 
     @Test
     public void fixCarWithNotEnoughMoney() {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
-
         human.buyCar(car);
 
         assertEquals("You haven't enough money on bank account", human.fixCar(1000));
@@ -156,8 +149,6 @@ public class HumanTest {
     @ParameterizedTest
     @ValueSource(ints = {1000, 2000, 3000})
     public void fixCarWithEnoughAmount(Integer amount) {
-        Human human = new Human("Mari");
-        Car car = new Car("Dodge");
         int balance = human.getBankAccount().getBalance();
         int carCondition = car.getCondition();
 
