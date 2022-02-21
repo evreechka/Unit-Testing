@@ -1,4 +1,5 @@
-import math.PowerSeries;
+package math;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -10,8 +11,8 @@ public class PowerSeriesTest {
     void calculateAcosWithValidValuesByPowerSeries(Double x) {
         PowerSeries powerSeries = new PowerSeries(50);
 
-        double expected = Math.acos(x);
-        double input = powerSeries.arccos(x);
+        final double expected = Math.acos(x);
+        final double input = powerSeries.acos(x);
 
         assertTrue(Math.abs(expected - input) <= 0.05);
     }
@@ -21,7 +22,7 @@ public class PowerSeriesTest {
     void returnNanIfAbsValueMoreOne(Double x) {
         PowerSeries powerSeries = new PowerSeries(50);
 
-        double input = powerSeries.arccos(x);
+        final double input = powerSeries.acos(x);
 
         assertEquals(Double.NaN, input);
     }
@@ -31,8 +32,8 @@ public class PowerSeriesTest {
     void calculateAcosWithValidIterationCount(Integer countIteration) {
         PowerSeries powerSeries = new PowerSeries(countIteration);
 
-        double expected = Math.acos(0.8);
-        double input = powerSeries.arccos(0.8);
+        final double expected = Math.acos(0.8);
+        final double input = powerSeries.acos(0.8);
 
         assertTrue(Math.abs(expected - input) <= 0.01);
     }

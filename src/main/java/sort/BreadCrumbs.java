@@ -2,7 +2,7 @@ package sort;
 
 public class BreadCrumbs {
 
-    private StringBuilder path = new StringBuilder("/");
+    private final StringBuilder path = new StringBuilder("/");
 
     public StringBuilder getPath() {
         return path;

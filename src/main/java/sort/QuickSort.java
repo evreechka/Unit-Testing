@@ -9,7 +9,7 @@ public class QuickSort {
 
         if (startIndex >= endIndex)
             return;
-        if (startIndex < 0 || endIndex < 0)
+        if (startIndex < 0)
             return;
 
         int middle = startIndex + (endIndex - startIndex) / 2;

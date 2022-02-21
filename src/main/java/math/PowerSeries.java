@@ -7,10 +7,12 @@ public class PowerSeries {
         this.iterationCount = iterationCount;
     }
 
-    public double arccos(double x) {
+    public double acos(double x) {
         if (Math.abs(x) > 1)
             return Double.NaN;
         double result = Math.PI / 2;
+        if (iterationCount > 50)
+            iterationCount = 50;
         for (int i = 0; i <= iterationCount; i++) {
             result -= (factorial(2 * i) / (Math.pow(4, i) * Math.pow(factorial(i), 2) * (2 * i + 1))) * Math.pow(x, 2 * i + 1);
         }
